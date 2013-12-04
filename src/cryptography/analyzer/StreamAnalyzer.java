@@ -18,6 +18,8 @@ import java.util.TreeMap;
 public class StreamAnalyzer {
     private static final Integer DEFAULT_STEP = 1;
 
+    private static final Integer DEFAULT_SEEK = 1;
+
     private Integer total;
     /**
      * .
@@ -50,9 +52,9 @@ public class StreamAnalyzer {
      * .
      * @return
      */
-    public Map<String, Integer> analyze(Integer step) {
+    public Map<String, Integer> analyze(Integer step, Integer seek) {
         this.histogram.clear();
-        for (int i = 0; i < stream.length(); i = i + step) {
+        for (int i = 0; i < stream.length(); i = i + seek) {
             if(i + step > stream.length()) {
                 step = this.stream.length() - i;
             }
@@ -72,7 +74,16 @@ public class StreamAnalyzer {
      * @return
      */
     public Map<String, Integer> analyze() {
-        return this.analyze(this.DEFAULT_STEP);
+        return this.analyze(this.DEFAULT_STEP, this.DEFAULT_SEEK);
+    }
+    /**
+     * Parse the stream with a seek equals to "step" and
+     * extract "step" tokens.
+     * @param step Size of a token
+     * @return histogram generated according to the parsing job
+     */
+    public Map<String, Integer> analyze(Integer step) {
+        return this.analyze(this.DEFAULT_STEP, this.DEFAULT_STEP);
     }
 
     public void displayHistogram() {

@@ -32,7 +32,7 @@ public class Cryptography {
             //### Analyze the stream
             StreamAnalyzer analyzer = new StreamAnalyzer(p.getParsedStream());
 
-            analyzer.analyze(5);
+            analyzer.analyze(5,1);
 
             analyzer.displaySortedHistogram();
         }
