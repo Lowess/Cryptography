@@ -1,0 +1,13 @@
+####################
+ #Compiled source #
+####################
+*.class
+
+####################
+ # Project files #
+####################
+*.xml
+
+nbproject
+build
+manifest.mf
