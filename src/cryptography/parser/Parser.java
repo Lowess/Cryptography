@@ -30,6 +30,13 @@ public abstract class Parser {
     }
     /**
      * .
+     * @param parsedStream
+     */
+    public void setParsedStream(StringBuilder parsedStream) {
+        this.parsedStream = parsedStream;
+    }
+    /**
+     * .
      * @return
      */
     public String getParsedStreamToString() {

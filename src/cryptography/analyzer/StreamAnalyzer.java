@@ -6,6 +6,7 @@
 
 package cryptography.analyzer;
 
+import cryptography.parser.Parser;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,11 +16,7 @@ import java.util.TreeMap;
  *
  * @author florian
  */
-public class StreamAnalyzer {
-    private static final Integer DEFAULT_STEP = 1;
-
-    private static final Integer DEFAULT_SEEK = 1;
-
+public class StreamAnalyzer extends Analyzer {
     private Integer total;
     /**
      * .
@@ -35,14 +32,10 @@ public class StreamAnalyzer {
     private HistogramComparator histogramComparator;
     /**
      * .
-     */
-    private StringBuilder stream;
-    /**
-     * .
      * @param paramStream
      */
-    public StreamAnalyzer(StringBuilder paramStream) {
-        this.stream = paramStream;
+    public StreamAnalyzer(Parser paramParser) {
+        this.parser = paramParser;
         this.histogram = new HashMap<String, Integer>();
         this.histogramComparator = new HistogramComparator(histogram);
         this.sortedHistogram = new TreeMap<String, Integer>(this.histogramComparator);
@@ -54,11 +47,14 @@ public class StreamAnalyzer {
      */
     public Map<String, Integer> analyze(Integer step, Integer seek) {
         this.histogram.clear();
+
+        StringBuilder stream = this.parser.getParsedStream();
+
         for (int i = 0; i < stream.length(); i = i + seek) {
             if(i + step > stream.length()) {
-                step = this.stream.length() - i;
+                step = stream.length() - i;
             }
-            String key = this.stream.subSequence(i, i + step).toString();
+            String key = stream.subSequence(i, i + step).toString();
 
             if(histogram.containsKey(key)) {
                 this.histogram.put(key, histogram.get(key) + 1);
